@@ -1,3 +1,5 @@
+local ler = io.read
+math.randomseed(os.time())
 -- Função para gerar uma senha segura
 function generatePassword(length, useSpecial, useNumbers)
     local chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -18,13 +20,13 @@ end
 
 function msglen(msg1)
     io.write(msg1)
-    return tonumber(io.read())
+    return tonumber(ler())
 end
 
 function msginc(msg)
     local msg1 = ("Incluir %s? (s/n): "):format(msg)
     io.write(msg1)
-    return io.read() == "s"
+    return ler():lower() == "s"
 end
 
 -- Interface CLI
