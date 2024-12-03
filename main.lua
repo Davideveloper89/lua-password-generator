@@ -1,7 +1,6 @@
-local ler = io.read
 math.randomseed(os.time())
 -- Função para gerar uma senha segura
-function generatePassword(length, useSpecial, useNumbers)
+local function generatePassword(length, useSpecial, useNumbers)
     local chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
     local specialChars = "!@#$%^&*()-_=+<>?"
     local numbers = "0123456789"
@@ -10,7 +9,7 @@ function generatePassword(length, useSpecial, useNumbers)
     if useNumbers then chars = chars .. numbers end
 
     local password = ""
-    for i = 1, length do
+    for _ = 1, length do
         local index = math.random(1, #chars)
         password = password .. chars:sub(index, index)
     end
@@ -18,20 +17,23 @@ function generatePassword(length, useSpecial, useNumbers)
     return password
 end
 
-function msglen(msg1)
-    io.write(msg1)
-    return tonumber(ler())
+local function ler()
+    return io.read("*number")
 end
 
-function msginc(msg)
-    local msg1 = ("Incluir %s? (s/n): "):format(msg)
+local function msglen(msg1)
     io.write(msg1)
-    return ler():lower() == "s"
+    return ler()
+end
+
+local function msginc(msg)
+    io.write(("Incluir %s? Digite 1 para SIM ou qualquer outro caracter para NÃO: "):format(msg))
+    return ler() == 1
 end
 
 -- Interface CLI
 print("Gerador de Senhas Seguras em Lua")
-local length = msglen "Insira o comprimento da senha:"
+local length = msglen "Insira o comprimento da senha: "
 local includeSpecial = msginc "caracteres especiais"
 local includeNumbers = msginc "números"
 
